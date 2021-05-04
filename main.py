@@ -3,7 +3,8 @@ import os
 from gtts import gTTS
 from playsound import playsound
 import random
-
+#####
+print("sklad")
 def speak(val):
     tts = gTTS(text=val,lang="tr",slow=False)
     file = "asnwer.mp3"
