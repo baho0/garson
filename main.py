@@ -1,8 +1,15 @@
+#gerekli kütüphaneler
 import speech_recognition as sr
 import os
 from gtts import gTTS
 from playsound import playsound
 import random
+#benim data dosyalarım
+import malzemeler
+import ozellikler
+import malzemeDict
+import yemekDict
+import yemekler
 
 def speak(val):
     tts = gTTS(text=val,lang="tr",slow=False)
@@ -28,30 +35,12 @@ def mic(val):
         except Exception as e:
             print("Error occured -> " + str(e))
 
-class malzemeler:
-    #malzemeler
-    kiyma = {"tad" : "leziz", "tür":"kuzu", "ek":"sı"} 
-    domates = {"tad" : "leziz", "tür":"çanakkale", "ek" :"i"} 
-    sogan = {"tad" : "taze", "tür":"arpacık", "ek" :"ı"} 
-    biber = {"tad":"dalından yeni koparılmış", "tür":"sivri","ek":"i"}
-    yumurta = {"tad":"nefis","tür":"gezen tavuk","ek":"sı"}
-    #malzeme dict
-    malzeme = {"kıyma":kiyma, "domates":domates, "soğan":sogan,"biber":biber,"yumurta":yumurta}
-    #ek özellikler
-    özellik = ["harika","şahane","muhteşem","paşalara layık"]
-    #yemekler
-    kiymaKavurma = {"malzemeler":["soğan","kıyma"], "süreç":"kavrulmuş", "ek":"yı", "isim":"kıyma kavurma"}
-    menemen = {"malzemeler":["soğan","biber","domates","yumurta"],"süreç":"pişirilmiş", "ek":"i","isim":"menemen"}
-    #yemek dict
-    yemek = {"kıyma kavurma":kiymaKavurma,"menemen":menemen}
-
-
 istenilen = input("yemek ismi[test için] >>> ")
-yemek = malzemeler.yemek[istenilen]
+yemek = yemekDict.yemek[istenilen]
 isim = yemek["isim"]
 using = yemek["malzemeler"]
 process = yemek["süreç"]
-ozellik = malzemeler().özellik
+ozellik = ozellikler.ozellik
 
 #Cümle kurma
 cumle = "size "
@@ -59,7 +48,7 @@ for i in range(0,int(len(using)/2)):
     atilacak = random.randint(-1, len(using)-1)
     using.pop(atilacak)
 for x in using:
-    malzeme = malzemeler.malzeme[x]
+    malzeme = malzemeDict.malzeme[x]
     cumle += malzeme["tad"] + " " + malzeme["tür"]+" " + x + malzeme["ek"]
     if(using.index(x) == (len(using)-2)):
         cumle += " ve "

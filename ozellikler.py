@@ -1,0 +1,1 @@
+ozellik = ["harika","şahane","muhteşem","paşalara layık"]
