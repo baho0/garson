@@ -49,7 +49,7 @@ for i in range(0,int(len(using)/2)):
     using.pop(atilacak)
 for x in using:
     malzeme = malzemeDict.malzeme[x]
-    cumle += malzeme["tad"] + " " + malzeme["tür"]+" " + x + malzeme["ek"]
+    cumle += malzeme["tad"] + " " + malzeme["tur"]+" " + x + malzeme["ek"]
     if(using.index(x) == (len(using)-2)):
         cumle += " ve "
     elif(using.index(x) == len(using)-1):
