@@ -35,6 +35,10 @@ def mic(val):
         except Exception as e:
             print("Error occured -> " + str(e))
 
+#gerekli yenilemeler
+yemekDict.refresh()
+malzemeDict.refresh()
+
 istenilen = input("yemek ismi[test için] >>> ")
 yemek = yemekDict.yemek[istenilen]
 isim = yemek["isim"]
@@ -45,7 +49,7 @@ ozellik = ozellikler.ozellik
 #Cümle kurma
 cumle = "size "
 for i in range(0,int(len(using)/2)):
-    atilacak = random.randint(-1, len(using)-1)
+    atilacak = random.randint(0, len(using)-1)
     using.pop(atilacak)
 for x in using:
     malzeme = malzemeDict.malzeme[x]

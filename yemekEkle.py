@@ -12,7 +12,7 @@ while True:
         malzemeler.append(malzeme) 
     else:
         break
-text += str(malzemeler) + ", \"süreç\" : \""
+text += str(malzemeler).replace("\'","\"") + ", \"süreç\" : \""
 surec = input("süreç girin >>> ")
 text += surec +"\" , \"ek\" : \""
 ek = input("ek girin >>> ")
