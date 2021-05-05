@@ -38,31 +38,64 @@ def mic(val):
 #gerekli yenilemeler
 yemekDict.refresh()
 malzemeDict.refresh()
+yemekList = yemekDict.yemek.keys()
+yemekList = list(yemekList)
 
-istenilen = input("yemek ismi[test için] >>> ")
-yemek = yemekDict.yemek[istenilen]
-isim = yemek["isim"]
-using = yemek["malzemeler"]
-process = yemek["süreç"]
-ozellik = ozellikler.ozellik
+def oner():
+    randomYemek = random.randint(0, len(yemekList)-1)
+    istenilen = yemekList[randomYemek]
+    del randomYemek
+    yemek = yemekDict.yemek[istenilen]
+    isim = yemek["isim"]
+    using = yemek["malzemeler"]
+    process = yemek["süreç"]
+    ozellik = ozellikler.ozellik
 
-#Cümle kurma
-cumle = "size "
-for i in range(0,int(len(using)/2)):
-    atilacak = random.randint(0, len(using)-1)
-    using.pop(atilacak)
-for x in using:
-    malzeme = malzemeDict.malzeme[x]
-    cumle += malzeme["tad"] + " " + malzeme["tur"]+" " + x + malzeme["ek"]
-    if(using.index(x) == (len(using)-2)):
-        cumle += " ve "
-    elif(using.index(x) == len(using)-1):
-        pass
-    else:
-        cumle += ", "
+    #Cümle kurma
+    cumle = "size "
+    for i in range(0,int(len(using)/2)):
+        atilacak = random.randint(0, len(using)-1)
+        using.pop(atilacak)
+    for x in using:
+        malzeme = malzemeDict.malzeme[x]
+        cumle += malzeme["tad"] + " " + malzeme["tur"]+" " + x + malzeme["ek"]
+        if(using.index(x) == (len(using)-2)):
+            cumle += " ve "
+        elif(using.index(x) == len(using)-1):
+            pass
+        else:
+            cumle += ", "
 
-randomOzellik = random.randint(0, len(ozellik)-1)
-cumle += " ile " + process + " " + ozellik[randomOzellik] +" "+ isim + yemek["ek"] +" " + "öneriyorum."
+    randomOzellik = random.randint(0, len(ozellik)-1)
+    cumle += " ile " + process + " " + ozellik[randomOzellik] +" "+ isim + yemek["ek"] +" " + "öneriyorum "
 
-#final
-speak(cumle)
+    #final
+    return cumle
+
+while True:
+    speak("hoş geldiniz, buyrun menümüze bir göz atın ağzınızı sulandıracak bir çok yemeğimiz var.")
+    oneri = oner()
+    speak("ben şahsen "+oneri)
+    speak("menümüz burada")
+    sira = 1
+    for yemek in yemekList:
+        if(sira%4 == 0):
+            print(sira+") "+yemek)
+        else:   
+            print(sira,") "+yemek,end="    ")
+        sira+=1
+    print("")
+    said = ""
+    said = mic("siparişlerinizi alayım eğer aklınızda bir şey yoksa size en muhteşem yemeklerimizden birini önerebilirim")
+    print(said)
+    if("yok" in said):
+        oneri = oner()
+        said = mic("ozaman "+ oneri + "ne dersiniz")
+        if("olur" in said or "tamam" in said or "peki" in said or "güzel" in said):
+            speak("ustaaaa duydun gönder gelsin")
+            speak("efendim yemekleriniz birazdan getirilecektir şimdiden afiyet olsun")
+            break
+    elif("var" in said):
+        said = mic("ne veriyim abime")
+        print("devam edecek...")
+        break
