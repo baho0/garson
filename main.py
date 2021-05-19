@@ -38,18 +38,42 @@ def mic(val):
 #gerekli yenilemeler
 yemekDict.refresh()
 malzemeDict.refresh()
-yemekList = yemekDict.yemek.keys()
-yemekList = list(yemekList)
 
-def oner():
-    randomYemek = random.randint(0, len(yemekList)-1)
-    istenilen = yemekList[randomYemek]
-    del randomYemek
-    yemek = yemekDict.yemek[istenilen]
-    isim = yemek["isim"]
-    using = yemek["malzemeler"]
-    process = yemek["süreç"]
-    ozellik = ozellikler.ozellik
+
+def oner(val):
+    if(val == "default"):
+        yemekList = yemekDict.yemek.keys()
+        yemekList = list(yemekList)
+        randomYemek = random.randint(0, len(yemekList)-1)
+        istenilen = yemekList[randomYemek]
+        del randomYemek
+        yemek = yemekDict.yemek[istenilen]
+        isim = yemek["isim"]
+        using = yemek["malzemeler"]
+        process = yemek["süreç"]
+        ozellik = ozellikler.ozellik
+    if(val == "sıcak"):
+        yemekList = yemekDict.sicakYemek.keys()
+        yemekList = list(yemekList)
+        randomYemek = random.randint(0, len(yemekList)-1)
+        istenilen = yemekList[randomYemek]
+        del randomYemek
+        yemek = yemekDict.sicakYemek[istenilen]
+        isim = yemek["isim"]
+        using = yemek["malzemeler"]
+        process = yemek["süreç"]
+        ozellik = ozellikler.ozellik
+    if(val == "hafif"):
+        yemekList = yemekDict.hafifYemek.keys()
+        yemekList = list(yemekList)
+        randomYemek = random.randint(0, len(yemekList)-1)
+        istenilen = yemekList[randomYemek]
+        del randomYemek
+        yemek = yemekDict.hafifYemek[istenilen]
+        isim = yemek["isim"]
+        using = yemek["malzemeler"]
+        process = yemek["süreç"]
+        ozellik = ozellikler.ozellik
 
     #Cümle kurma
     cumle = "size "
@@ -71,10 +95,11 @@ def oner():
 
     #final
     return cumle
-
+yemekList = yemekDict.yemek.keys()
+yemekList = list(yemekList)
 while True:
     speak("hoş geldiniz, buyrun menümüze bir göz atın ağzınızı sulandıracak bir çok yemeğimiz var.")
-    oneri = oner()
+    oneri = oner("default")
     speak("ben şahsen "+oneri)
     speak("menümüz burada")
     sira = 1
@@ -88,8 +113,22 @@ while True:
     said = ""
     said = mic("siparişlerinizi alayım eğer aklınızda bir şey yoksa size en muhteşem yemeklerimizden birini önerebilirim")
     print(said)
+    if("sıcak" in said):
+        oneri = oner("sıcak")
+        said = mic("ozaman "+ oneri + "ne dersiniz")
+        if("olur" in said or "tamam" in said or "peki" in said or "güzel" in said):
+            speak("ustaaaa duydun gönder gelsin")
+            speak("efendim yemekleriniz birazdan getirilecektir şimdiden afiyet olsun")
+            break
+    if("hafif" in said):
+        oneri = oner("hafif")
+        said = mic("ozaman "+ oneri + "ne dersiniz")
+        if("olur" in said or "tamam" in said or "peki" in said or "güzel" in said):
+            speak("ustaaaa duydun gönder gelsin")
+            speak("efendim yemekleriniz birazdan getirilecektir şimdiden afiyet olsun")
+            break
     if("yok" in said):
-        oneri = oner()
+        oneri = oner("default")
         said = mic("ozaman "+ oneri + "ne dersiniz")
         if("olur" in said or "tamam" in said or "peki" in said or "güzel" in said):
             speak("ustaaaa duydun gönder gelsin")
